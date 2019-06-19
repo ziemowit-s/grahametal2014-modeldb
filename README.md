@@ -1,7 +1,7 @@
-THIS IS ORYGINAL README (in HTML) FROM MODEL DB SITE:
+THIS IS ORYGINAL README FROM MODEL_DB WITH MINOR CHANGES FOR md file:
 
-<html><pre>
-Synaptic input to a CA1 pyramidal cell
+
+# Synaptic input to a CA1 pyramidal cell
 --------------------------------------
 Bruce P. Graham 5-5-14
 
@@ -9,7 +9,7 @@ Code underpinning the paper: B.P. Graham, A. Saudargiene and S. Cobb,
 Spine head calcium as a measure of summed postsynaptic activity for driving 
 synaptic plasticity. Neural Computation, in press, 2014.
 
-Abstract:
+## Abstract:
 We use a computational model of a hippocampal CA1 pyramidal cell to
 demonstrate that spine head calcium provides an instantaneous readout
 at each synapse of the postsynaptic weighted sum of all presynaptic
@@ -39,21 +39,21 @@ these cells. The calcium signal is closer in form to the activity
 measures used in traditional neural network learning rules than to the
 spike times used in spike-timing-dependent plasticity (STDP).
 
-Code:
+# Code:
 
 run_PC.hoc - main file for running simulations with a GUI (also
              accessible from mosinit.hoc)
 run_batsyn.hoc - file for running batches of simulations
 
-Instructions:
+# Instructions:
 
 Run run_PC.hoc and do the following:
 
 First notice that an image showing the Figure 1 placement of the
 spines on the dendrites is displayed:
 
-<img src="./screenshot1.png" alt="screenshot1" width="550">
-
+## screenshot1.png
+ 
 To reproduce voltage responses illustrated in Figure 1:
 1. set number of synapses to 0 for each dendritic layer (Synapses
 GUI).
@@ -64,12 +64,14 @@ dendritic voltage.
 4. click Dendrites under "Max voltage plots" in plots GUI to see the
 decline with distance of the membrane voltage following spike
 initiation in the soma.
-<img src="./screenshot2.png" alt="screenshot2" width="550">
+
+# screenshot2.png
 5. reduce the density of KA channels in the dendrites to 0.01 mS/cm^2
 in the "Ion Channels" GUI.
 6. rerun the simulation and replot the voltage to see the reduced
 decline with distance.
-<img src="./screenshot3.png" alt="screenshot3" width="550">
+
+# screenshot3.png
 
 To reproduce spine head calcium and voltage traces as in Figure 3:
 1. set IClamp[0] amp to 0 nA and KA to 0.03 mS/cm^2 (if necessary)
@@ -100,4 +102,3 @@ e.g. Figure 2).
 euler to derivimplicit which is appropriate for simple ion
 accumulation mechanisms.  See Integration methods for SOLVE statements
 http://www.neuron.yale.edu/phpBB/viewtopic.php?f=28&t=592
-</pre></html>
