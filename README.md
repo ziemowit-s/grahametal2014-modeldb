@@ -2,7 +2,7 @@ THIS IS ORYGINAL README FROM MODEL_DB WITH MINOR CHANGES FOR md file:
 
 
 # Synaptic input to a CA1 pyramidal cell
---------------------------------------
+
 Bruce P. Graham 5-5-14
 
 Code underpinning the paper: B.P. Graham, A. Saudargiene and S. Cobb, 
@@ -47,12 +47,12 @@ run_batsyn.hoc - file for running batches of simulations
 
 # Instructions:
 
-Run run_PC.hoc and do the following:
+* Run run_PC.hoc and do the following:
 
 First notice that an image showing the Figure 1 placement of the
 spines on the dendrites is displayed:
 
-## screenshot1.png
+   * screenshot1.png
  
 To reproduce voltage responses illustrated in Figure 1:
 1. set number of synapses to 0 for each dendritic layer (Synapses
@@ -65,13 +65,13 @@ dendritic voltage.
 decline with distance of the membrane voltage following spike
 initiation in the soma.
 
-# screenshot2.png
+   * screenshot2.png
 5. reduce the density of KA channels in the dendrites to 0.01 mS/cm^2
 in the "Ion Channels" GUI.
 6. rerun the simulation and replot the voltage to see the reduced
 decline with distance.
 
-# screenshot3.png
+   * screenshot3.png
 
 To reproduce spine head calcium and voltage traces as in Figure 3:
 1. set IClamp[0] amp to 0 nA and KA to 0.03 mS/cm^2 (if necessary)
@@ -86,7 +86,7 @@ respectively (the other traces in these windows are for an SO synapse
 4. try reducing KA to 0.01 and rerunning the simulation to see the
 effects of increased "cooperation" between the active synapses.
 
-Run run_batsyn.hoc to do the following:
+* Run run_batsyn.hoc to do the following:
 
 To generate curves of mean peak spine head calcium versus number of
 active synapses (as in many of the figures in the paper), run the
