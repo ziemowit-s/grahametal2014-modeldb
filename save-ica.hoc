@@ -16,7 +16,7 @@ cai_sneck_file = new File()
 cai_sneck_list = new List()
 
 proc record_spines() {local i, index
-    for (i=0; i < 1; i=i+1) {
+    for (i=0; i < spines_to_stim_len; i=i+1) {
         index = spines_to_stim_indexes.x[i]
         cell.shead[index] for (x) {
             print secname(), x
@@ -26,23 +26,30 @@ proc record_spines() {local i, index
         }
     }
 
-    for (i=0; i < 1; i=i+1) {
+    for (i=0; i < spines_to_stim_len; i=i+1) {
         index = spines_to_stim_indexes.x[i]
         cell.sneck[index] for (x) {
             print secname(), x
             cai_vec = new Vector()
             cai_vec.record(&cai(x))
-            cai_shead_list.append(cai_vec)
+            cai_sneck_list.append(cai_vec)
         }
     }
 }
 
-proc record_shead_cai() {local i, ii
+record_spines()
+
+strdef srec
+proc save_shead_cai() {local i, ii, index
     // $s1: string path to save the file
     // return: saved value in mM
 	cai_shead_file.wopen($s1)
 	for i=0, cai_shead_list.count()-1 {
-	    cai_shead_file.printf("sec_%g:", i)
+	    index = spines_to_stim_indexes.x[i%spines_to_stim_len]
+        cell.shead[index] {
+            sprint(srec, "%s:", secname())
+        }
+        cai_shead_file.printf(srec)
         for ii=0, time_vec.size()-1 {
             cai_shead_file.printf(" %g", cai_shead_list.o(i).x(ii))
         }
@@ -51,12 +58,16 @@ proc record_shead_cai() {local i, ii
 	cai_shead_file.close()
 }
 
-proc record_sneck_cai() {local i, ii
+proc save_sneck_cai() {local i, ii, index
     // $s1: string path to save the file
     // return: saved value in mM
 	cai_sneck_file.wopen($s1)
 	for i=0, cai_sneck_list.count()-1 {
-	    cai_sneck_file.printf("sec_%g:", i)
+	    index = spines_to_stim_indexes.x[i%spines_to_stim_len]
+        cell.sneck[index] {
+            sprint(srec, "%s:", secname())
+        }
+        cai_sneck_file.printf(srec)
         for ii=0, time_vec.size()-1 {
             cai_sneck_file.printf(" %g", cai_sneck_list.o(i).x(ii))
         }
