@@ -16,6 +16,7 @@ cai_sneck_file = new File()
 cai_sneck_list = new List()
 
 proc record_spines() {local i, index
+    print "preparing ica recording for spine heads:"
     for (i=0; i < spines_to_stim_len; i=i+1) {
         index = spines_to_stim_indexes.x[i]
         cell.shead[index] for (x) {
@@ -26,6 +27,7 @@ proc record_spines() {local i, index
         }
     }
 
+    print "preparing ica recording for spine necks:"
     for (i=0; i < spines_to_stim_len; i=i+1) {
         index = spines_to_stim_indexes.x[i]
         cell.sneck[index] for (x) {
@@ -43,12 +45,14 @@ strdef srec
 proc save_shead_cai() {local i, ii, index
     // $s1: string path to save the file
     // return: saved value in mM
+    print "saving ica for spine heads [all segments]:"
 	cai_shead_file.wopen($s1)
 	for i=0, cai_shead_list.count()-1 {
 	    index = spines_to_stim_indexes.x[i%spines_to_stim_len]
         cell.shead[index] {
             sprint(srec, "%s:", secname())
         }
+        print srec
         cai_shead_file.printf(srec)
         for ii=0, time_vec.size()-1 {
             cai_shead_file.printf(" %g", cai_shead_list.o(i).x(ii))
@@ -61,12 +65,14 @@ proc save_shead_cai() {local i, ii, index
 proc save_sneck_cai() {local i, ii, index
     // $s1: string path to save the file
     // return: saved value in mM
+    print "saving ica for spine necks [all segments]:"
 	cai_sneck_file.wopen($s1)
 	for i=0, cai_sneck_list.count()-1 {
 	    index = spines_to_stim_indexes.x[i%spines_to_stim_len]
         cell.sneck[index] {
             sprint(srec, "%s:", secname())
         }
+        print srec
         cai_sneck_file.printf(srec)
         for ii=0, time_vec.size()-1 {
             cai_sneck_file.printf(" %g", cai_sneck_list.o(i).x(ii))
