@@ -1,0 +1,66 @@
+objref cai_vec, time_vec
+objref cai_shead_file, cai_shead_list, cai_shead_list
+objref cai_sneck_file, cai_sneck_list, cai_shead_list
+objref sh, ca_shead, ca_sneck, ca_stim
+
+ca_shead = new SectionList()
+ca_sneck = new SectionList()
+
+time_vec = new Vector()
+time_vec.record(&t)
+
+cai_shead_file = new File()
+cai_shead_list = new List()
+
+cai_sneck_file = new File()
+cai_sneck_list = new List()
+
+proc record_spines() {local i, index
+    for (i=0; i < 1; i=i+1) {
+        index = spines_to_stim_indexes.x[i]
+        cell.shead[index] for (x) {
+            print secname(), x
+            cai_vec = new Vector()
+            cai_vec.record(&cai(x))
+            cai_shead_list.append(cai_vec)
+        }
+    }
+
+    for (i=0; i < 1; i=i+1) {
+        index = spines_to_stim_indexes.x[i]
+        cell.sneck[index] for (x) {
+            print secname(), x
+            cai_vec = new Vector()
+            cai_vec.record(&cai(x))
+            cai_shead_list.append(cai_vec)
+        }
+    }
+}
+
+proc record_shead_cai() {local i, ii
+    // $s1: string path to save the file
+    // return: saved value in mM
+	cai_shead_file.wopen($s1)
+	for i=0, cai_shead_list.count()-1 {
+	    cai_shead_file.printf("sec_%g:", i)
+        for ii=0, time_vec.size()-1 {
+            cai_shead_file.printf(" %g", cai_shead_list.o(i).x(ii))
+        }
+        cai_shead_file.printf("\n")
+	}
+	cai_shead_file.close()
+}
+
+proc record_sneck_cai() {local i, ii
+    // $s1: string path to save the file
+    // return: saved value in mM
+	cai_sneck_file.wopen($s1)
+	for i=0, cai_sneck_list.count()-1 {
+	    cai_sneck_file.printf("sec_%g:", i)
+        for ii=0, time_vec.size()-1 {
+            cai_sneck_file.printf(" %g", cai_sneck_list.o(i).x(ii))
+        }
+        cai_sneck_file.printf("\n")
+	}
+	cai_sneck_file.close()
+}

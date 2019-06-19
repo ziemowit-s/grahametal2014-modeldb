@@ -1,0 +1,48 @@
+objref spines_to_stim_indexes
+spines_to_stim_len = 4
+spines_to_stim_indexes = new Vector(spines_to_stim_len)
+
+spines_to_stim_indexes.x[0] = 471 //left closer to soma
+spines_to_stim_indexes.x[1] = 455 // left middle-range from soma
+
+spines_to_stim_indexes.x[2] = 18 // right closer to soma
+spines_to_stim_indexes.x[3] = 324 // right middle-range from soma
+
+proc removeAllCa3Stims() {
+    // silence any extra synapses
+    for (i=0; i < nCA3max; i=i+1) {
+        CA3list.o(i).stim.number = 0
+        ncCA3list.o(i).weight = 0
+        ncCA3Nlist.o(i).weight = 0
+    }
+    print "all Striatum Radiatum (Ca3) stims removed."
+}
+
+objref sh
+proc setSelectedSpinesToStimCA3() {local i, index
+    //stim selected spines with indexes from: spines_to_stim_indexes and show them on the neuron shape
+    removeAllCa3Stims()
+    sh = new Shape()
+
+    index = 0
+    for (i=0; i < spines_to_stim_len; i=i+1) {
+        index = spines_to_stim_indexes.x[i]
+        CA3list.o(index).stim.number = CNUM
+        CA3list.o(index).stim.start = CSTART
+        CA3list.o(index).stim.interval = CINT
+        CA3list.o(index).stim.noise = CNOISE
+        CA3list.o(index).stim.burstint = CBINT
+        CA3list.o(index).stim.burstlen = CBLEN
+        ncCA3list.o(index).weight = CAWGT	
+        ncCA3list.o(index).delay = CDEL
+        ncCA3Nlist.o(index).weight = CNWGT	
+        ncCA3Nlist.o(index).delay = CDEL
+        print "activated synapse with index:", spines_to_stim_indexes.x[i]
+        
+        cell.shead[index] {
+            sh.color(i+2)
+            sh.len_scale(100)
+        }
+    }
+    sh.show(1)
+}
