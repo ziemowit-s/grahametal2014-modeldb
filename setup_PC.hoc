@@ -149,8 +149,6 @@ proc makeCA3() {local i
     CA3list.o(i).stim.burstlen = CBLEN
     ncCA3list.o(i).weight = CAWGT	
     ncCA3list.o(i).delay = CDEL
-    ncCA3Nlist.o(i).weight = CNWGT	
-    ncCA3Nlist.o(i).delay = CDEL
   }
 }
 
@@ -268,7 +266,7 @@ proc setCA3() {local i
 
 proc setCA3b() {local i
   for (i=nCA3max; i < nCA3max+nCA3b; i=i+1) {
-    CA3list.o(i).stim.number = CNUM
+    CA3list.o(i).stim.number = 1 //CNUM
     CA3list.o(i).stim.start = CSTART
     CA3list.o(i).stim.interval = CINT
     CA3list.o(i).stim.noise = CNOISE

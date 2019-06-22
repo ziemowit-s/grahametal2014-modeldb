@@ -53,6 +53,7 @@ objref ocbox_
 }
 {
     xpanel("Synapses", 0)
+    xbutton("Reset My Synapses","setSelectedSpinesToStimCA3()")
     xlabel("CA3 apical")
     nCA3 = 0
     xvalue("Number","nCA3", 1,"setCA3()", 0, 0 )

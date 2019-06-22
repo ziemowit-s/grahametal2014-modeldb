@@ -27,15 +27,21 @@ proc setSelectedSpinesToStimCA3() {local i, index
     index = 0
     for (i=0; i < spines_to_stim_len; i=i+1) {
         index = spines_to_stim_indexes.x[i]
+
+        // BurstCell with NetCon
         CA3list.o(index).stim.number = CNUM
         CA3list.o(index).stim.start = CSTART
         CA3list.o(index).stim.interval = CINT
         CA3list.o(index).stim.noise = CNOISE
         CA3list.o(index).stim.burstint = CBINT
         CA3list.o(index).stim.burstlen = CBLEN
+
+        // NetCon BurstCel->AMPA
         ncCA3list.o(index).weight = CAWGT	
         ncCA3list.o(index).delay = CDEL
-        ncCA3Nlist.o(index).weight = CNWGT	
+
+        // NetCon BurstCell->NMDA
+        ncCA3Nlist.o(index).weight = CNWGT
         ncCA3Nlist.o(index).delay = CDEL
         print "activated synapse with index:", spines_to_stim_indexes.x[i]
         

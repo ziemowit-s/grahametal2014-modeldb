@@ -45,7 +45,7 @@ setEC()
 
 //makexsyns()
 //makexchans()
-//makexstim()
+makexstim()
 //makexplots()
 xopen("spine-stim.hoc")
 xopen("save-ica.hoc")
@@ -53,7 +53,7 @@ setSelectedSpinesToStimCA3()
 proc run() {
     stdinit()
     continuerun(tstop)
-    save_shead_cai("cai_spine_head.txt")
-    save_sneck_cai("cai_spine_neck.txt")
+    save_shead_cai("cai_spine_head.txt", 3)
+    save_sneck_cai("cai_spine_neck.txt", 3)
 }
 xopen("synstim.ses")

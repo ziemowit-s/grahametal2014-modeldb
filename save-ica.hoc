@@ -42,15 +42,23 @@ proc record_spines() {local i, index
 record_spines()
 
 strdef srec
-proc save_shead_cai() {local i, ii, index
-    // $s1: string path to save the file
+proc save_shead_cai() {local i, ii, index, current_seg, spines_number
+    // $1: string path to save the file
+    // $2: number of segments in spine head
     // return: saved value in mM
     print "saving ica for spine heads [all segments]:"
 	cai_shead_file.wopen($s1)
+	current_seg = -1
+	all_segmenst_num = cai_shead_list.count()
+	number_of_spines = all_segmenst_num/$2
+
 	for i=0, cai_shead_list.count()-1 {
+        if(i%number_of_spines == 0) {
+            current_seg += 1
+        }
 	    index = spines_to_stim_indexes.x[i%spines_to_stim_len]
         cell.shead[index] {
-            sprint(srec, "%s:", secname())
+            sprint(srec, "%s.%.1f:", secname(), current_seg/($2-1))
         }
         print srec
         cai_shead_file.printf(srec)
@@ -62,15 +70,23 @@ proc save_shead_cai() {local i, ii, index
 	cai_shead_file.close()
 }
 
-proc save_sneck_cai() {local i, ii, index
-    // $s1: string path to save the file
+proc save_sneck_cai() {local i, ii, index, current_seg, spines_number
+    // $1: string path to save the file
+    // $2: number of segments in spine neck
     // return: saved value in mM
     print "saving ica for spine necks [all segments]:"
 	cai_sneck_file.wopen($s1)
+	current_seg = -1
+	all_segmenst_num = cai_sneck_list.count()
+	number_of_spines = all_segmenst_num/$2
+
 	for i=0, cai_sneck_list.count()-1 {
+        if(i%number_of_spines == 0) {
+            current_seg += 1
+        }
 	    index = spines_to_stim_indexes.x[i%spines_to_stim_len]
         cell.sneck[index] {
-            sprint(srec, "%s:", secname())
+            sprint(srec, "%s.%.1f:", secname(), current_seg/($2-1))
         }
         print srec
         cai_sneck_file.printf(srec)
