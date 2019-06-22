@@ -45,7 +45,7 @@ setEC()
 
 //makexsyns()
 //makexchans()
-makexstim()
+//makexstim()
 //makexplots()
 xopen("spine-stim.hoc")
 xopen("save-ica.hoc")
