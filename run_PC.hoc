@@ -48,7 +48,7 @@ setEC()
 //makexstim()
 //makexplots()
 xopen("spine-stim.hoc")
-xopen("save-ica.hoc")
+xopen("save-cai.hoc")
 setSelectedSpinesToStimCA3()
 proc run() {
     stdinit()
