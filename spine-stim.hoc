@@ -1,12 +1,19 @@
-objref spines_to_stim_indexes
+objref spines_to_stim_indexes, apical_to_stim_indexes
 spines_to_stim_len = 4
 spines_to_stim_indexes = new Vector(spines_to_stim_len)
+apical_to_stim_indexes = new Vector(spines_to_stim_len)
 
-spines_to_stim_indexes.x[0] = 471 //left closer to soma
-spines_to_stim_indexes.x[1] = 455 // left middle-range from soma
+spines_to_stim_indexes.x[0] = 471 //left closer to soma apical_dend[52]
+apical_to_stim_indexes.x[0] = 52
 
-spines_to_stim_indexes.x[2] = 18 // right closer to soma
-spines_to_stim_indexes.x[3] = 324 // right middle-range from soma
+spines_to_stim_indexes.x[1] = 455 // left middle-range from soma apical_dend[35]
+apical_to_stim_indexes.x[1] = 35
+
+spines_to_stim_indexes.x[2] = 18 // right closer to soma apical_dend[50]
+apical_to_stim_indexes.x[2] = 50
+
+spines_to_stim_indexes.x[3] = 324 // right middle-range from soma apical_dend[6]
+apical_to_stim_indexes.x[3] = 6
 
 proc removeAllCa3Stims() {
     // silence any extra synapses
@@ -19,33 +26,33 @@ proc removeAllCa3Stims() {
 }
 
 objref sh
-proc setSelectedSpinesToStimCA3() {local i, index
+proc setSelectedSpinesToStimCA3() {local i, spine_index
     //stim selected spines with indexes from: spines_to_stim_indexes and show them on the neuron shape
     removeAllCa3Stims()
     sh = new Shape()
 
-    index = 0
+    spine_index = 0
     for (i=0; i < spines_to_stim_len; i=i+1) {
-        index = spines_to_stim_indexes.x[i]
+        spine_index = spines_to_stim_indexes.x[i]
 
         // BurstCell with NetCon
-        CA3list.o(index).stim.number = CNUM
-        CA3list.o(index).stim.start = CSTART
-        CA3list.o(index).stim.interval = CINT
-        CA3list.o(index).stim.noise = CNOISE
-        CA3list.o(index).stim.burstint = CBINT
-        CA3list.o(index).stim.burstlen = CBLEN
+        CA3list.o(spine_index).stim.number = CNUM
+        CA3list.o(spine_index).stim.start = CSTART
+        CA3list.o(spine_index).stim.interval = CINT
+        CA3list.o(spine_index).stim.noise = CNOISE
+        CA3list.o(spine_index).stim.burstint = CBINT
+        CA3list.o(spine_index).stim.burstlen = CBLEN
 
         // NetCon BurstCel->AMPA
-        ncCA3list.o(index).weight = CAWGT	
-        ncCA3list.o(index).delay = CDEL
+        ncCA3list.o(spine_index).weight = CAWGT
+        ncCA3list.o(spine_index).delay = CDEL
 
         // NetCon BurstCell->NMDA
-        ncCA3Nlist.o(index).weight = CNWGT
-        ncCA3Nlist.o(index).delay = CDEL
-        print "activated synapse with index:", spines_to_stim_indexes.x[i]
-        
-        cell.shead[index] {
+        ncCA3Nlist.o(spine_index).weight = CNWGT
+        ncCA3Nlist.o(spine_index).delay = CDEL
+        print "activated synapse with spine_index:", spines_to_stim_indexes.x[i]
+
+        cell.shead[spine_index] {
             sh.color(i+2)
             sh.len_scale(100)
         }

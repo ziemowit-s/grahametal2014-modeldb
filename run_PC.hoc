@@ -53,7 +53,8 @@ setSelectedSpinesToStimCA3()
 proc run() {
     stdinit()
     continuerun(tstop)
-    save_shead_cai("cai_spine_head.txt", 3)
-    save_sneck_cai("cai_spine_neck.txt", 3)
+    save_shead_cai("cai_spine_head.txt")
+    save_sneck_cai("cai_spine_neck.txt")
+    save_apical_cai("cai_apical_dend.txt")
 }
 xopen("synstim.ses")

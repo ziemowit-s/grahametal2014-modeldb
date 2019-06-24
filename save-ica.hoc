@@ -1,10 +1,7 @@
 objref cai_vec, time_vec
 objref cai_shead_file, cai_shead_list, cai_shead_list
 objref cai_sneck_file, cai_sneck_list, cai_shead_list
-objref sh, ca_shead, ca_sneck, ca_stim
-
-ca_shead = new SectionList()
-ca_sneck = new SectionList()
+objref cai_apical_file, cai_apical_list, cai_apical_list
 
 time_vec = new Vector()
 time_vec.record(&t)
@@ -15,19 +12,22 @@ cai_shead_list = new List()
 cai_sneck_file = new File()
 cai_sneck_list = new List()
 
+cai_apical_file = new File()
+cai_apical_list = new List()
+
 proc record_spines() {local i, index
-    print "preparing ica recording for spine heads:"
+    print "preparing cai recording for spine heads:"
     for (i=0; i < spines_to_stim_len; i=i+1) {
         index = spines_to_stim_indexes.x[i]
         cell.shead[index] for (x) {
-            print secname(), x
+            print "recording:", secname(), x
             cai_vec = new Vector()
             cai_vec.record(&cai(x))
             cai_shead_list.append(cai_vec)
         }
     }
 
-    print "preparing ica recording for spine necks:"
+    print "preparing cai recording for spine necks:"
     for (i=0; i < spines_to_stim_len; i=i+1) {
         index = spines_to_stim_indexes.x[i]
         cell.sneck[index] for (x) {
@@ -37,63 +37,93 @@ proc record_spines() {local i, index
             cai_sneck_list.append(cai_vec)
         }
     }
+    
+    print "preparing cai recording for spines' dendrites:"
+    for (i=0; i < spines_to_stim_len; i=i+1) {
+        index = apical_to_stim_indexes.x[i]
+        cell.apical_dend[index] for (x) {
+            print secname(), x
+            cai_vec = new Vector()
+            cai_vec.record(&cai(x))
+            cai_apical_list.append(cai_vec)
+        }
+    }
 }
 
 record_spines()
 
 strdef srec
-proc save_shead_cai() {local i, ii, index, current_seg, spines_number
+proc save_shead_cai() {local i, ii, index, current_seg, cai_shead_list_index
     // $1: string path to save the file
-    // $2: number of segments in spine head
     // return: saved value in mM
-    print "saving ica for spine heads [all segments]:"
+    print "saving cai for spine heads [all segments]:"
 	cai_shead_file.wopen($s1)
 	current_seg = -1
-	all_segmenst_num = cai_shead_list.count()
-	number_of_spines = all_segmenst_num/$2
 
-	for i=0, cai_shead_list.count()-1 {
-        if(i%number_of_spines == 0) {
-            current_seg += 1
+    cai_shead_list_index = -1
+	for (i=0; i < spines_to_stim_len; i=i+1) {
+	    index = spines_to_stim_indexes.x[i]
+	    cell.shead[index] for (x) {
+	        cai_shead_list_index += 1
+            sprint(srec, "%s.%.1f:", secname(), x)
+            print srec
+
+            cai_shead_file.printf(srec)
+            for ii=0, time_vec.size()-1 {
+                cai_shead_file.printf(" %g", cai_shead_list.o(cai_shead_list_index).x(ii))
+            }
+            cai_shead_file.printf("\n")
         }
-	    index = spines_to_stim_indexes.x[i%spines_to_stim_len]
-        cell.shead[index] {
-            sprint(srec, "%s.%.1f:", secname(), current_seg/($2-1))
-        }
-        print srec
-        cai_shead_file.printf(srec)
-        for ii=0, time_vec.size()-1 {
-            cai_shead_file.printf(" %g", cai_shead_list.o(i).x(ii))
-        }
-        cai_shead_file.printf("\n")
 	}
 	cai_shead_file.close()
 }
 
-proc save_sneck_cai() {local i, ii, index, current_seg, spines_number
+proc save_sneck_cai() {local i, ii, index, current_seg, cai_sneck_list_index
     // $1: string path to save the file
-    // $2: number of segments in spine neck
     // return: saved value in mM
-    print "saving ica for spine necks [all segments]:"
+    print "saving cai for spine necks [all segments]:"
 	cai_sneck_file.wopen($s1)
 	current_seg = -1
-	all_segmenst_num = cai_sneck_list.count()
-	number_of_spines = all_segmenst_num/$2
 
-	for i=0, cai_sneck_list.count()-1 {
-        if(i%number_of_spines == 0) {
-            current_seg += 1
+    cai_sneck_list_index = -1
+	for (i=0; i < spines_to_stim_len; i=i+1) {
+	    index = spines_to_stim_indexes.x[i]
+	    cell.sneck[index] for (x) {
+	        cai_sneck_list_index += 1
+            sprint(srec, "%s.%.1f:", secname(), x)
+            print srec
+
+            cai_sneck_file.printf(srec)
+            for ii=0, time_vec.size()-1 {
+                cai_sneck_file.printf(" %g", cai_sneck_list.o(cai_sneck_list_index).x(ii))
+            }
+            cai_sneck_file.printf("\n")
         }
-	    index = spines_to_stim_indexes.x[i%spines_to_stim_len]
-        cell.sneck[index] {
-            sprint(srec, "%s.%.1f:", secname(), current_seg/($2-1))
-        }
-        print srec
-        cai_sneck_file.printf(srec)
-        for ii=0, time_vec.size()-1 {
-            cai_sneck_file.printf(" %g", cai_sneck_list.o(i).x(ii))
-        }
-        cai_sneck_file.printf("\n")
 	}
 	cai_sneck_file.close()
+}
+
+proc save_apical_cai() {local i, ii, index, current_seg, cai_apical_list_index
+    // $1: string path to save the file
+    // return: saved value in mM
+    print "saving cai for apical dendrites [all segments]:"
+	cai_apical_file.wopen($s1)
+	current_seg = -1
+
+    cai_apical_list_index = -1
+	for (i=0; i < spines_to_stim_len; i=i+1) {
+	    index = apical_to_stim_indexes.x[i]
+	    cell.apical_dend[index] for (x) {
+	        cai_apical_list_index += 1
+            sprint(srec, "%s.%.1f:", secname(), x)
+            print srec
+
+            cai_apical_file.printf(srec)
+            for ii=0, time_vec.size()-1 {
+                cai_apical_file.printf(" %g", cai_apical_list.o(cai_apical_list_index).x(ii))
+            }
+            cai_apical_file.printf("\n")
+        }
+	}
+	cai_apical_file.close()
 }
