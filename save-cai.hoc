@@ -1,4 +1,4 @@
-objref cai_vec, time_vec
+objref shead_cai_vec, sneck_cai_vec, apical_cai_vec, time_vec
 objref cai_shead_file, cai_shead_list, cai_shead_list
 objref cai_sneck_file, cai_sneck_list, cai_shead_list
 objref cai_apical_file, cai_apical_list, cai_apical_list
@@ -21,9 +21,9 @@ proc record_spines() {local i, index
         index = spines_to_stim_indexes.x[i]
         cell.shead[index] for (x) {
             print "recording:", secname(), x
-            cai_vec = new Vector()
-            cai_vec.record(&cai(x))
-            cai_shead_list.append(cai_vec)
+            shead_cai_vec = new Vector()
+            shead_cai_vec.record(&cai(x))
+            cai_shead_list.append(shead_cai_vec)
         }
     }
 
@@ -32,9 +32,9 @@ proc record_spines() {local i, index
         index = spines_to_stim_indexes.x[i]
         cell.sneck[index] for (x) {
             print secname(), x
-            cai_vec = new Vector()
-            cai_vec.record(&cai(x))
-            cai_sneck_list.append(cai_vec)
+            sneck_cai_vec = new Vector()
+            sneck_cai_vec.record(&cai(x))
+            cai_sneck_list.append(sneck_cai_vec)
         }
     }
     
@@ -43,9 +43,9 @@ proc record_spines() {local i, index
         index = apical_to_stim_indexes.x[i]
         cell.apical_dend[index] for (x) {
             print secname(), x
-            cai_vec = new Vector()
-            cai_vec.record(&cai(x))
-            cai_apical_list.append(cai_vec)
+            apical_cai_vec = new Vector()
+            apical_cai_vec.record(&cai(x))
+            cai_apical_list.append(apical_cai_vec)
         }
     }
 }
@@ -63,14 +63,21 @@ proc save_shead_cai() {local i, ii, index, current_seg, cai_shead_list_index
     cai_shead_list_index = -1
 	for (i=0; i < spines_to_stim_len; i=i+1) {
 	    index = spines_to_stim_indexes.x[i]
+
+	    cai_shead_file.printf("Compartment and Segment")
+	    for ii=0, time_vec.size()-1 {
+            cai_shead_file.printf(",%f", time_vec.x(ii))
+        }
+        cai_shead_file.printf("\n")
+
 	    cell.shead[index] for (x) {
 	        cai_shead_list_index += 1
-            sprint(srec, "%s.%.1f:", secname(), x)
+            sprint(srec, "%s.%.1f", secname(), x)
             print srec
 
             cai_shead_file.printf(srec)
             for ii=0, time_vec.size()-1 {
-                cai_shead_file.printf(" %g", cai_shead_list.o(cai_shead_list_index).x(ii))
+                cai_shead_file.printf(",%g", cai_shead_list.o(cai_shead_list_index).x(ii))
             }
             cai_shead_file.printf("\n")
         }
@@ -88,14 +95,21 @@ proc save_sneck_cai() {local i, ii, index, current_seg, cai_sneck_list_index
     cai_sneck_list_index = -1
 	for (i=0; i < spines_to_stim_len; i=i+1) {
 	    index = spines_to_stim_indexes.x[i]
+
+	    cai_sneck_file.printf("Compartment and Segment")
+	    for ii=0, time_vec.size()-1 {
+            cai_sneck_file.printf(",%f", time_vec.x(ii))
+        }
+        cai_sneck_file.printf("\n")
+
 	    cell.sneck[index] for (x) {
 	        cai_sneck_list_index += 1
-            sprint(srec, "%s.%.1f:", secname(), x)
+            sprint(srec, "%s.%.1f", secname(), x)
             print srec
 
             cai_sneck_file.printf(srec)
             for ii=0, time_vec.size()-1 {
-                cai_sneck_file.printf(" %g", cai_sneck_list.o(cai_sneck_list_index).x(ii))
+                cai_sneck_file.printf(",%g", cai_sneck_list.o(cai_sneck_list_index).x(ii))
             }
             cai_sneck_file.printf("\n")
         }
@@ -113,14 +127,21 @@ proc save_apical_cai() {local i, ii, index, current_seg, cai_apical_list_index
     cai_apical_list_index = -1
 	for (i=0; i < spines_to_stim_len; i=i+1) {
 	    index = apical_to_stim_indexes.x[i]
+
+	    cai_apical_file.printf("Compartment and Segment")
+	    for ii=0, time_vec.size()-1 {
+            cai_apical_file.printf(",%f", time_vec.x(ii))
+        }
+        cai_apical_file.printf("\n")
+
 	    cell.apical_dend[index] for (x) {
 	        cai_apical_list_index += 1
-            sprint(srec, "%s.%.1f:", secname(), x)
+            sprint(srec, "%s.%.1f", secname(), x)
             print srec
 
             cai_apical_file.printf(srec)
             for ii=0, time_vec.size()-1 {
-                cai_apical_file.printf(" %g", cai_apical_list.o(cai_apical_list_index).x(ii))
+                cai_apical_file.printf(",%g", cai_apical_list.o(cai_apical_list_index).x(ii))
             }
             cai_apical_file.printf("\n")
         }

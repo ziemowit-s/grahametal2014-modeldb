@@ -53,8 +53,14 @@ setSelectedSpinesToStimCA3()
 proc run() {
     stdinit()
     continuerun(tstop)
-    save_shead_cai("cai_spine_head.txt")
-    save_sneck_cai("cai_spine_neck.txt")
-    save_apical_cai("cai_apical_dend.txt")
+    save_shead_cai("cai_spine_head.csv")
+    save_sneck_cai("cai_spine_neck.csv")
+    save_apical_cai("cai_apical_dend.csv")
 }
 xopen("synstim.ses")
+
+// use variable time step
+objref cvode
+cvode = new CVode()
+cvode.active(1)
+execute("using_cvode_=1")
