@@ -1,0 +1,150 @@
+objref shead_ica_vec, sneck_ica_vec, apical_ica_vec, ica_time_vec
+objref ica_shead_file, ica_shead_list, ica_shead_list
+objref ica_sneck_file, ica_sneck_list, ica_shead_list
+objref ica_apical_file, ica_apical_list, ica_apical_list
+
+ica_time_vec = new Vector()
+ica_time_vec.record(&t)
+
+ica_shead_file = new File()
+ica_shead_list = new List()
+
+ica_sneck_file = new File()
+ica_sneck_list = new List()
+
+ica_apical_file = new File()
+ica_apical_list = new List()
+
+proc record_spines() {local i, index
+    print "preparing ica recording for spine heads:"
+    for (i=0; i < spines_to_stim_len; i=i+1) {
+        index = spines_to_stim_indexes.x[i]
+        cell.shead[index] for (x) {
+            print "recording:", secname(), x
+            shead_ica_vec = new Vector()
+            shead_ica_vec.record(&ica(x))
+            ica_shead_list.append(shead_ica_vec)
+        }
+    }
+
+    print "preparing ica recording for spine necks:"
+    for (i=0; i < spines_to_stim_len; i=i+1) {
+        index = spines_to_stim_indexes.x[i]
+        cell.sneck[index] for (x) {
+            print secname(), x
+            sneck_ica_vec = new Vector()
+            sneck_ica_vec.record(&ica(x))
+            ica_sneck_list.append(sneck_ica_vec)
+        }
+    }
+    
+    print "preparing ica recording for spines' dendrites:"
+    for (i=0; i < spines_to_stim_len; i=i+1) {
+        index = apical_to_stim_indexes.x[i]
+        cell.apical_dend[index] for (x) {
+            print secname(), x
+            apical_ica_vec = new Vector()
+            apical_ica_vec.record(&ica(x))
+            ica_apical_list.append(apical_ica_vec)
+        }
+    }
+}
+
+record_spines()
+
+strdef srec
+proc save_shead_ica() {local i, ii, index, current_seg, ica_shead_list_index
+    // $1: string path to save the file
+    // return: saved value in mM
+    print "saving ica for spine heads [all segments]:"
+	ica_shead_file.wopen($s1)
+	current_seg = -1
+
+    ica_shead_list_index = -1
+	for (i=0; i < spines_to_stim_len; i=i+1) {
+	    index = spines_to_stim_indexes.x[i]
+
+	    ica_shead_file.printf("Compartment and Segment")
+	    for ii=0, ica_time_vec.size()-1 {
+            ica_shead_file.printf(",%f", ica_time_vec.x(ii))
+        }
+        ica_shead_file.printf("\n")
+
+	    cell.shead[index] for (x) {
+	        ica_shead_list_index += 1
+            sprint(srec, "%s.%.1f", secname(), x)
+            print srec
+
+            ica_shead_file.printf(srec)
+            for ii=0, ica_time_vec.size()-1 {
+                ica_shead_file.printf(",%g", ica_shead_list.o(ica_shead_list_index).x(ii))
+            }
+            ica_shead_file.printf("\n")
+        }
+	}
+	ica_shead_file.close()
+}
+
+proc save_sneck_ica() {local i, ii, index, current_seg, ica_sneck_list_index
+    // $1: string path to save the file
+    // return: saved value in mM
+    print "saving ica for spine necks [all segments]:"
+	ica_sneck_file.wopen($s1)
+	current_seg = -1
+
+    ica_sneck_list_index = -1
+	for (i=0; i < spines_to_stim_len; i=i+1) {
+	    index = spines_to_stim_indexes.x[i]
+
+	    ica_sneck_file.printf("Compartment and Segment")
+	    for ii=0, ica_time_vec.size()-1 {
+            ica_sneck_file.printf(",%f", ica_time_vec.x(ii))
+        }
+        ica_sneck_file.printf("\n")
+
+	    cell.sneck[index] for (x) {
+	        ica_sneck_list_index += 1
+            sprint(srec, "%s.%.1f", secname(), x)
+            print srec
+
+            ica_sneck_file.printf(srec)
+            for ii=0, ica_time_vec.size()-1 {
+                ica_sneck_file.printf(",%g", ica_sneck_list.o(ica_sneck_list_index).x(ii))
+            }
+            ica_sneck_file.printf("\n")
+        }
+	}
+	ica_sneck_file.close()
+}
+
+proc save_apical_ica() {local i, ii, index, current_seg, ica_apical_list_index
+    // $1: string path to save the file
+    // return: saved value in mM
+    print "saving ica for apical dendrites [all segments]:"
+	ica_apical_file.wopen($s1)
+	current_seg = -1
+
+    ica_apical_list_index = -1
+	for (i=0; i < spines_to_stim_len; i=i+1) {
+	    index = apical_to_stim_indexes.x[i]
+
+	    ica_apical_file.printf("Compartment and Segment")
+	    for ii=0, ica_time_vec.size()-1 {
+            ica_apical_file.printf(",%f", ica_time_vec.x(ii))
+        }
+        ica_apical_file.printf("\n")
+
+	    cell.apical_dend[index] for (x) {
+	        ica_apical_list_index += 1
+            sprint(srec, "%s.%.1f", secname(), x)
+            print srec
+
+            ica_apical_file.printf(srec)
+            for ii=0, ica_time_vec.size()-1 {
+                ica_apical_file.printf(",%g", ica_apical_list.o(ica_apical_list_index).x(ii))
+            }
+            ica_apical_file.printf("\n")
+        }
+	}
+	ica_apical_file.close()
+}

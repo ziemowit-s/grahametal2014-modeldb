@@ -49,13 +49,32 @@ setEC()
 //makexplots()
 xopen("spine-stim.hoc")
 xopen("save-cai.hoc")
+xopen("save-ica.hoc")
 setSelectedSpinesToStimCA3()
+
+strdef fname
 proc run() {
+    delta_t = IClamp[0].del-CSTART
     stdinit()
     continuerun(tstop)
-    save_shead_cai("cai_spine_head.csv")
-    save_sneck_cai("cai_spine_neck.csv")
-    save_apical_cai("cai_apical_dend.csv")
+
+    sprint(fname, "cai_spine_head_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", delta_t, IClamp[0].amp, IClamp[0].dur)
+    save_shead_cai(fname)
+
+    sprint(fname, "cai_spine_neck_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", delta_t, IClamp[0].amp, IClamp[0].dur)
+    save_sneck_cai(fname)
+
+    sprint(fname, "cai_apical_dend_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", delta_t, IClamp[0].amp, IClamp[0].dur)
+    save_apical_cai(fname)
+
+    sprint(fname, "ica_spine_head_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", delta_t, IClamp[0].amp, IClamp[0].dur)
+    save_shead_ica(fname)
+
+    sprint(fname, "ica_spine_neck_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", delta_t, IClamp[0].amp, IClamp[0].dur)
+    save_sneck_ica(fname)
+
+    sprint(fname, "ica_apical_dend_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", delta_t, IClamp[0].amp, IClamp[0].dur)
+    save_apical_ica(fname)
 }
 xopen("synstim.ses")
 
