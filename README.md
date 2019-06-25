@@ -1,7 +1,80 @@
-THIS IS ORYGINAL README FROM MODEL_DB WITH MINOR CHANGES FOR md file:
+
+## Motivation
+The Purpose of this repository is to save calcium currents from selected spines and apical dendrites
+
+## Files overview
+
+* setup_PC.hoc - main file which need to be run in order to save calcium currents
+* spine-stim.hoc - describes spines and apical dendrites to stimulate
+* save-ica.hoc - saves cai currents for selected spines and apical dendrites
+* save-cai.hoc - saves cai currents for selected spines and apical dendrites
+* synstim.ses - describes GUI interfaces as well as Graphs and neuron plots
+
+## Prerequisites
+
+### spine-stim.hoc
+
+* define number of spines to stimulate in spines_to_stim_len variables (default is 4).
+  the number of selected apical dendrites must also match this number,
+  since those are the most proximal apical dendrites to selected spines (one for each spine).
+  
+* add to each index of spines_to_stim_indexes index of the selected spine you want to observe and stimulate, for example:
+  ```spines_to_stim_indexes.x[0] = 471```
+    * spine index refers to indexes in cell.shead and cell.sneck arrays 
+    * note that for neck and head the index is the same
+    
+* add to each index of apical_to_stim_indexes index of the selected apical dendrites you want to observe, for example:
+  ```apical_to_stim_indexes.x[0] = 52```
+    * apical dendrite index refers to indexes in cell.apical_dend array
+    * note that for apical_dend the index of the most proximal dendrite connected with the spine you selected earlier
+      is different then the spine index
+      
+* by default 4 spines (4 heads and 4 necks) as well as 4 apical dendrites were selected
+
+### run_PC.hoc
+
+* if you want time variable length change this line to:
+  ```cvode_active(1)```
+    * this is default setup
+  
+* if you want time of constant length (each step 0.005 ms) change this line to:
+  ```cvode_active(0)```
+  
+  
+### Run
+
+* compile
+```nrnivmodl```
+
+* run
+```nrngui run_PC.hoc```
+
+### STDP simulation
+
+In order to run STDP simulation with different delta t (dt) between synaptic stimulation and somatic AP do the following:
+* after run click on the PointProcessManager window
+* click SelectPointProcess and choose IClamp, which will simulate AP
+* change parameters:
+    * del (delay) in ms
+    * dur (duration) in ms
+    * amp (aplitude) in nA
+    
+* IMPORTANT NOTICE: bear in mind that all sinaptic stimulus are scheduled to 50 ms delay, 
+  so for example if you change IClamp to 20ms that meand -30dt in STDP
+  
+* in RunControl change tstop (time stop) in ms (default is 200ms)
+* click Init&Run
+
+* The recommended parameters for IClamp based on Brzosko et al. 2015:
+    * dur: 3 ms
+    * amp: 1.6 nA
 
 
-# Synaptic input to a CA1 pyramidal cell
+THE FOLLOWING IS THE ORIGINAL README FROM MODEL_DB
+--------------------------------------------------
+
+
+## Synaptic input to a CA1 pyramidal cell
 
 Bruce P. Graham 5-5-14
 
@@ -9,7 +82,7 @@ Code underpinning the paper: B.P. Graham, A. Saudargiene and S. Cobb,
 Spine head calcium as a measure of summed postsynaptic activity for driving 
 synaptic plasticity. Neural Computation, in press, 2014.
 
-## Abstract:
+### Abstract:
 We use a computational model of a hippocampal CA1 pyramidal cell to
 demonstrate that spine head calcium provides an instantaneous readout
 at each synapse of the postsynaptic weighted sum of all presynaptic
@@ -39,13 +112,13 @@ these cells. The calcium signal is closer in form to the activity
 measures used in traditional neural network learning rules than to the
 spike times used in spike-timing-dependent plasticity (STDP).
 
-# Code:
+## Code:
 
 run_PC.hoc - main file for running simulations with a GUI (also
              accessible from mosinit.hoc)
 run_batsyn.hoc - file for running batches of simulations
 
-# Instructions:
+## Instructions:
 
 * Run run_PC.hoc and do the following:
 

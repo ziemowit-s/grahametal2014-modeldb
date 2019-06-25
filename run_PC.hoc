@@ -77,9 +77,3 @@ proc run() {
     save_apical_ica(fname)
 }
 xopen("synstim.ses")
-
-// use variable time step
-objref cvode
-cvode = new CVode()
-cvode.active(1)
-execute("using_cvode_=1")
