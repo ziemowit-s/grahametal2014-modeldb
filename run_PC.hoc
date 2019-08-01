@@ -45,12 +45,12 @@ setEC()
 
 //makexsyns()
 //makexchans()
-//makexstim()
 //makexplots()
 xopen("spine-stim.hoc")
 xopen("save-cai.hoc")
 xopen("save-ica.hoc")
 setSelectedSpinesToStimCA3()
+makexstim()
 
 strdef fname
 proc run() {

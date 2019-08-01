@@ -151,9 +151,9 @@ NET_RECEIVE (w) {
 	}
 	if (flag == 1 && on == 1) {
 		ispike = ispike + 1
-		net_event(t)
 		next_invl()
 		if (on == 1) {
+		    net_event(t)
 			net_send(event, 1)
 		}
 	}
