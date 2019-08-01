@@ -124,8 +124,9 @@ strdef s
     save_window_ = new Graph(0)
     save_window_.size(0,200,-80,40)
     scene_vector_[5] = save_window_
-    {save_window_.view(0, -80, 200, 120, 732, 360, 300.6, 200.8)}
+    {save_window_.view(0, -80, 200, 120, 700, 0, 1200, 450)}
     graphList[0].append(save_window_)
+
     save_window_.save_name("graphList[0].")
     save_window_.addvar("cell.soma[0].v( 0.5 )", 1, 1)
     for (i=0; i < spines_to_stim_len; i=i+1) {
@@ -137,30 +138,17 @@ strdef s
     save_window_ = new Graph(0)
     save_window_.size(0,200,1.16415e-10,0.018)
     scene_vector_[6] = save_window_
-    {save_window_.view(0, 1.16415e-10, 200, 0.018, 732, 696, 300.6, 200.8)}
+    {save_window_.view(0, -80, 200, 120, 700, 800, 1200, 450)}
     graphList[2].append(save_window_)
 
     save_window_.save_name("graphList[1].")
     save_window_.addvar("cell.soma[0].cai( 0.5 )", 1, 1)
-    for (i=0; i < 1; i=i+1) {
+    for (i=0; i < spines_to_stim_len; i=i+1) {
         sprint(s, "cell.shead[%d].cai( 0.5 )", spines_to_stim_indexes.x[i])
         save_window_.addvar(s, i+2, 1)
     }
 }
-{
-    save_window_ = new Graph(0)
-    save_window_.size(0,200,-80,40)
-    scene_vector_[5] = save_window_
-    {save_window_.view(0, -80, 200, 120, 732, 360, 300.6, 200.8)}
-    graphList[0].append(save_window_)
-    save_window_.save_name("graphList[2].")
-    save_window_.addvar("cell.soma[0].v( 0.5 )", 1, 1)
-    for (i=0; i < spines_to_stim_len; i=i+1) {
-        sprint(s, "cell.sneck[%d].v( 0.5 )", spines_to_stim_indexes.x[i])
-        save_window_.addvar(s, i+2, 1)
-    }
-}
-{
+/*{
     save_window_ = new Graph(0)
     save_window_.size(0,200,-80,40)
     scene_vector_[5] = save_window_
@@ -169,21 +157,7 @@ strdef s
     save_window_.save_name("graphList[3].")
     save_window_.addvar("cell.soma[0].v( 0.5 )", 1, 1)
     save_window_.addvar("cell.apical_dend[52].v( 0.5 )", 2, 1)
-}
-{
-    save_window_ = new Graph(0)
-    save_window_.size(0,200,1.16415e-10,0.018)
-    scene_vector_[6] = save_window_
-    {save_window_.view(0, 1.16415e-10, 200, 0.018, 732, 696, 300.6, 200.8)}
-    graphList[2].append(save_window_)
-
-    save_window_.save_name("graphList[4].")
-    save_window_.addvar("cell.soma[0].cai( 0.5 )", 1, 1)
-    for (i=0; i < spines_to_stim_len; i=i+1) {
-        sprint(s, "cell.sneck[%d].cai( 0.5 )", spines_to_stim_indexes.x[i])
-        save_window_.addvar(s, i+2, 1)
-    }
-}
+}*/
 
 objectvar scene_vector_[1]
 {doNotify()}

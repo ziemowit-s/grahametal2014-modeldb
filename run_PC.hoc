@@ -3,7 +3,7 @@
 // Last update: BPG 2-5-14
 
 {load_file("nrngui.hoc")}
-cvode_active(1)
+cvode_active(1) // 1 - variable timestep; 0 - constant timestep
 
 connect_random_low_start_ = 1  // low seed for mcell_ran4_init()
 my_seed = 1
