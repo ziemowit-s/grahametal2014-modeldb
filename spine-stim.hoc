@@ -36,7 +36,7 @@ proc setSelectedSpinesToStimCA3() {local i, spine_index
         spine_index = spines_to_stim_indexes.x[i]
 
         // BurstCell with NetCon
-        CA3list.o(spine_index).stim.number = CNUM
+        CA3list.o(spine_index).stim.number = CNUM + 1 // hack - must be +1 spike
         CA3list.o(spine_index).stim.start = CSTART
         CA3list.o(spine_index).stim.interval = CINT
         CA3list.o(spine_index).stim.noise = CNOISE
@@ -58,4 +58,17 @@ proc setSelectedSpinesToStimCA3() {local i, spine_index
         }
     }
     sh.show(1)
+}
+
+proc hz_stim() {
+    CBINT = 9999999999
+    CBLEN = 9999999999
+
+    CINT = 1000/HZSTIM
+    CNUM = int(HZSTIM * (HZTIMESTIM/1000))
+    if (CNUM < 1) {
+        CNUM = 1
+    }
+    setSelectedSpinesToStimCA3()
+
 }

@@ -91,6 +91,9 @@ BSCBLEN = THETA*10	// BC burst length (continuous inhib)
 BSCWGT = 0.0    // BC weight (GABAA)
 BSCDEL = 3	// BC delay
 
+HZSTIM = 1
+HZTIMESTIM = 1
+
 
 {load_file("ranstream.hoc")}  // to give each cell its own sequence generator
 {load_file("randomlocation.hoc")}
@@ -390,6 +393,15 @@ xvalue("gka", "cell.gka", 1, "cell.set_dendrite()")
 xlabel("Ih")
 xvalue("gh", "cell.ghd", 1, "cell.set_dendrite()")
 xpanel()
+}
+
+proc makehzstim() {
+  xpanel("Hz Stimuli")
+    xlabel("CA3 apical")
+    xvalue("Start time (ms)", "CSTART", 1, "hz_stim()")
+    xvalue("Hz", "HZSTIM", 1, "hz_stim()")
+    xvalue("Time (ms)", "HZTIMESTIM", 1, "hz_stim()")
+    xpanel()
 }
 
 proc makexstim() {

@@ -50,7 +50,8 @@ xopen("spine-stim.hoc")
 xopen("save-cai.hoc")
 xopen("save-ica.hoc")
 setSelectedSpinesToStimCA3()
-makexstim()
+//makexstim()
+makehzstim()
 
 strdef fname
 proc run() {
