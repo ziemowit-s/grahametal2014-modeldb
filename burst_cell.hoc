@@ -16,13 +16,11 @@ proc init() {
 create soma
 
 proc biophys() {
-	soma stim = new BurstStim2()
+	soma stim = new NetStim()
     	stim.number = 10000
     	stim.start = 0
     	stim.interval = 10
     	stim.noise = 0
-    	stim.burstint = 100	// interburst interval (ms)
-    	stim.burstlen = 100	// burst length (ms)
 }
 
 obfunc connect2target() { localobj nc //$o1 target point process, optional $o2 returned NetCon

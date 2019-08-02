@@ -44,11 +44,7 @@ ECNUM = 100	// number of EC spikes
 ECSTART = STARTDEL	// time of first EC spike
 ECNOISE = 0	// EC ISI noise
 ECINT = 1000	// EC spike ISI (one spike for simulation period)
-ECBINT = 1000	// EC burst interval
-ECBLEN = 10	// EC burst length
 //ECINT = GAMMA	// EC spike ISI
-//ECBINT = THETA	// EC burst interval
-//ECBLEN = GAMMA*5	// EC burst length
 ECWGT = 0.0001	// EC weight to PCs (AMPA)
 ECNWGT = 0.0008	// EC weight to PCs (NMDA)
 ECDEL = 1	// EC delay
@@ -58,15 +54,11 @@ CNUM = 100	// number of cue spikes
 CSTART = STARTDEL+ECCA3DEL	// time of first cue spike
 CNOISE = 0	// cue ISI noise
 CINT = 2000	// EC spike ISI (one spike for simulation period)
-CBINT = 2000	// EC burst interval
-CBLEN = 10	// EC burst length
 //CINT = GAMMA	// cue spike ISI
-//CBINT = THETA	// EC burst interval
-//CBLEN = GAMMA*5	// EC burst length
 CAWGT = 0.0005	// cue weight (AMPA)
-CNWGT = 0.001	// excitatory weights (NMDA)
+CNWGT = CAWGT/2	// excitatory weights (NMDA)
 CAWGTb = 0.0005	// cue weight (basal AMPA)
-CNWGTb = 0.001	// excitatory weights (basal NMDA)
+CNWGTb = CAWGTb/2	// excitatory weights (basal NMDA)
 CDEL = 1	// cue delay
 
 // BC inhibition
@@ -74,8 +66,6 @@ BCNUM = 100	// number of BC spikes
 BCSTART = STARTDEL+1000	// time of first cue spike
 BCINT = GAMMA	// BC spike ISI
 BCNOISE = 0.05	// BC ISI noise
-BCBINT = THETA-(GAMMA*5)	// BC burst interval
-BCBLEN = THETA*10	// BC burst length (continuous inhib)
 //BCBLEN = GAMMA*10	// BC burst length
 BCWGT = 0.0    // BC weight (GABAA)
 BCDEL = 3	// BC delay
@@ -85,8 +75,6 @@ BSCNUM = 100	// number of BC spikes
 BSCSTART = STARTDEL+1000	// time of first cue spike
 BSCINT = GAMMA	// BC spike ISI
 BSCNOISE = 0.05	// BC ISI noise
-BSCBINT = THETA-(GAMMA*5)	// BC burst interval
-BSCBLEN = THETA*10	// BC burst length (continuous inhib)
 //BSCBLEN = GAMMA*10	// BC burst length
 BSCWGT = 0.0    // BC weight (GABAA)
 BSCDEL = 3	// BC delay
@@ -148,9 +136,7 @@ proc makeCA3() {local i
     CA3list.o(i).stim.start = CSTART
     CA3list.o(i).stim.interval = CINT
     CA3list.o(i).stim.noise = CNOISE
-    CA3list.o(i).stim.burstint = CBINT
-    CA3list.o(i).stim.burstlen = CBLEN
-    ncCA3list.o(i).weight = CAWGT	
+    ncCA3list.o(i).weight = CAWGT
     ncCA3list.o(i).delay = CDEL
   }
 }
@@ -167,9 +153,7 @@ proc makeCA3b() {local i
     CA3list.o(i).stim.start = CSTART
     CA3list.o(i).stim.interval = CINT
     CA3list.o(i).stim.noise = CNOISE
-    CA3list.o(i).stim.burstint = CBINT
-    CA3list.o(i).stim.burstlen = CBLEN
-    ncCA3list.o(i).weight = CAWGTb	
+    ncCA3list.o(i).weight = CAWGTb
     ncCA3list.o(i).delay = CDEL
     ncCA3Nlist.o(i).weight = CNWGTb	
     ncCA3Nlist.o(i).delay = CDEL
@@ -197,9 +181,7 @@ proc makeEC() {local i
     EClist.o(i).stim.start = ECSTART
     EClist.o(i).stim.interval = ECINT
     EClist.o(i).stim.noise = ECNOISE
-    EClist.o(i).stim.burstint = ECBINT
-    EClist.o(i).stim.burstlen = ECBLEN
-    ncEClist.o(i).weight = ECWGT	
+    ncEClist.o(i).weight = ECWGT
     ncEClist.o(i).delay = ECDEL
     ncECNlist.o(i).weight = ECNWGT	
     ncECNlist.o(i).delay = ECDEL
@@ -219,9 +201,7 @@ proc makeBC() {local i
     BClist.o(i).stim.start = BCSTART
     BClist.o(i).stim.interval = BCINT
     BClist.o(i).stim.noise = BCNOISE
-    BClist.o(i).stim.burstint = BCBINT
-    BClist.o(i).stim.burstlen = BCBLEN
-    ncBClist.o(i).weight = BCWGT	
+    ncBClist.o(i).weight = BCWGT
     ncBClist.o(i).delay = BCDEL
   }
 }
@@ -239,9 +219,7 @@ proc makeBSC() {local i
     BSClist.o(i).stim.start = BSCSTART
     BSClist.o(i).stim.interval = BSCINT
     BSClist.o(i).stim.noise = BSCNOISE
-    BSClist.o(i).stim.burstint = BSCBINT
-    BSClist.o(i).stim.burstlen = BSCBLEN
-    ncBSClist.o(i).weight = BSCWGT	
+    ncBSClist.o(i).weight = BSCWGT
     ncBSClist.o(i).delay = BSCDEL
   }
 }
@@ -252,9 +230,7 @@ proc setCA3() {local i
     CA3list.o(i).stim.start = CSTART
     CA3list.o(i).stim.interval = CINT
     CA3list.o(i).stim.noise = CNOISE
-    CA3list.o(i).stim.burstint = CBINT
-    CA3list.o(i).stim.burstlen = CBLEN
-    ncCA3list.o(i).weight = CAWGT	
+    ncCA3list.o(i).weight = CAWGT
     ncCA3list.o(i).delay = CDEL
     ncCA3Nlist.o(i).weight = CNWGT	
     ncCA3Nlist.o(i).delay = CDEL
@@ -273,9 +249,7 @@ proc setCA3b() {local i
     CA3list.o(i).stim.start = CSTART
     CA3list.o(i).stim.interval = CINT
     CA3list.o(i).stim.noise = CNOISE
-    CA3list.o(i).stim.burstint = CBINT
-    CA3list.o(i).stim.burstlen = CBLEN
-    ncCA3list.o(i).weight = CAWGTb	
+    ncCA3list.o(i).weight = CAWGTb
     ncCA3list.o(i).delay = CDEL
     ncCA3Nlist.o(i).weight = CNWGTb	
     ncCA3Nlist.o(i).delay = CDEL
@@ -294,9 +268,7 @@ proc setEC() {local i
     EClist.o(i).stim.start = ECSTART
     EClist.o(i).stim.interval = ECINT
     EClist.o(i).stim.noise = ECNOISE
-    EClist.o(i).stim.burstint = ECBINT
-    EClist.o(i).stim.burstlen = ECBLEN
-    ncEClist.o(i).weight = ECWGT	
+    ncEClist.o(i).weight = ECWGT
     ncEClist.o(i).delay = ECDEL
     ncECNlist.o(i).weight = ECNWGT	
     ncECNlist.o(i).delay = ECDEL
@@ -315,9 +287,7 @@ proc setBC() {local i
     BClist.o(i).stim.start = BCSTART
     BClist.o(i).stim.interval = BCINT
     BClist.o(i).stim.noise = BCNOISE
-    BClist.o(i).stim.burstint = BCBINT
-    BClist.o(i).stim.burstlen = BCBLEN
-    ncBClist.o(i).weight = BCWGT	
+    ncBClist.o(i).weight = BCWGT
     ncBClist.o(i).delay = BCDEL
   }
 }
@@ -328,9 +298,7 @@ proc setBSC() {local i
     BSClist.o(i).stim.start = BSCSTART
     BSClist.o(i).stim.interval = BSCINT
     BSClist.o(i).stim.noise = BSCNOISE
-    BSClist.o(i).stim.burstint = BSCBINT
-    BSClist.o(i).stim.burstlen = BSCBLEN
-    ncBSClist.o(i).weight = BSCWGT	
+    ncBSClist.o(i).weight = BSCWGT
     ncBSClist.o(i).delay = BSCDEL
   }
 }
@@ -411,8 +379,6 @@ xvalue("Start time", "CSTART", 1, "setSelectedSpinesToStimCA3()")
 xvalue("Total spikes", "CNUM", 1, "setSelectedSpinesToStimCA3()")
 xvalue("Spike interval", "CINT", 1, "setSelectedSpinesToStimCA3()")
 xvalue("Interval noise", "CNOISE", 1, "setSelectedSpinesToStimCA3()")
-xvalue("Burst interval", "CBINT", 1, "setSelectedSpinesToStimCA3()")
-xvalue("Burst length", "CBLEN", 1, "setSelectedSpinesToStimCA3()")
 xpanel()
 }
 

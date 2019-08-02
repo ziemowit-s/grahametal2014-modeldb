@@ -138,7 +138,7 @@ strdef s
     save_window_ = new Graph(0)
     save_window_.size(0,200,1.16415e-10,0.018)
     scene_vector_[6] = save_window_
-    {save_window_.view(0, 1.16415e-10, 200, 0.0065, 700, 800, 1200, 450)}
+    {save_window_.view(0, 1.16415e-10, 200, 0.045, 700, 800, 1200, 450)}
     graphList[2].append(save_window_)
 
     save_window_.save_name("graphList[1].")
