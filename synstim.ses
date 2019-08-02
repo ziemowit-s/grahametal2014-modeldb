@@ -53,20 +53,13 @@ objref ocbox_
 }
 {
     xpanel("Synapses", 0)
-    xbutton("Reset My Synapses","setSelectedSpinesToStimCA3()")
     xlabel("CA3 apical")
-    nCA3 = 0
-    xvalue("Number","nCA3", 1,"setCA3()", 0, 0 )
-    CAWGT = 0.0005
-    xvalue("AMPA","CAWGT", 1,"setCA3()", 0, 0 )
-    CNWGT = 0.001
-    xvalue("NMDA","CNWGT", 1,"setCA3()", 0, 0 )
+    xvalue("AMPA","CAWGT", 1,"setSelectedSpinesToStimCA3()", 0, 0 )
+    xvalue("NMDA","CNWGT", 1,"setSelectedSpinesToStimCA3()", 0, 0 )
     xlabel("CA3 basal")
     nCA3b = 0
     xvalue("Number","nCA3b", 1,"setCA3b()", 0, 0 )
-    CAWGTb = 0.0005
     xvalue("AMPA","CAWGTb", 1,"setCA3b()", 0, 0 )
-    CNWGTb = 0.001
     xvalue("NMDA","CNWGTb", 1,"setCA3b()", 0, 0 )
     xlabel("EC")
     nEC = 0
