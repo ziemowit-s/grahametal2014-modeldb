@@ -1,19 +1,19 @@
 objref spines_to_stim_indexes, apical_to_stim_indexes, iclamps, stim
-spines_to_stim_len = 1
+spines_to_stim_len = 4
 spines_to_stim_indexes = new Vector(spines_to_stim_len)
 apical_to_stim_indexes = new Vector(spines_to_stim_len)
 
 spines_to_stim_indexes.x[0] = 471 //left closer to soma apical_dend[52]
 apical_to_stim_indexes.x[0] = 52
 
-/*spines_to_stim_indexes.x[1] = 455 // left middle-range from soma apical_dend[35]
+spines_to_stim_indexes.x[1] = 455 // left middle-range from soma apical_dend[35]
 apical_to_stim_indexes.x[1] = 35
 
 spines_to_stim_indexes.x[2] = 18 // right closer to soma apical_dend[50]
 apical_to_stim_indexes.x[2] = 50
 
 spines_to_stim_indexes.x[3] = 324 // right middle-range from soma apical_dend[6]
-apical_to_stim_indexes.x[3] = 6*/
+apical_to_stim_indexes.x[3] = 6
 
 proc removeAllCa3Stims() {
     // silence any extra synapses
