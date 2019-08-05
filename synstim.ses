@@ -8,27 +8,7 @@ objectvar ocbox_, ocbox_list_, scene_, scene_list_
 
 //Begin PointProcessManager
 {load_file("pointman.hoc")}
-{PyramidalCell[0].soma[0] ocbox_ = new PointProcessManager(0)}
-{object_push(ocbox_)}
 
-{
-    mt.select("IClamp") i = mt.selected()
-    ms[i] = new MechanismStandard("IClamp")
-    ms[i].set("del", 50, 0)
-    ms[i].set("dur", 5, 0)
-    ms[i].set("amp", 0, 0)
-    mt.select("IClamp") i = mt.selected() maction(i)
-    hoc_ac_ = 0.5
-    sec.sec move() d1.flip_to(0)
-}
-
-{object_pop() doNotify()}
-{
-    ocbox_ = ocbox_.v1
-    ocbox_.map("PointProcessManager", 174, 744, 243.9, 486.9)
-}
-objref ocbox_
-//End PointProcessManager
 {
     xpanel("Plots", 0)
     xlabel("Max voltage plots")
@@ -141,16 +121,15 @@ strdef s
         save_window_.addvar(s, i+2, 1)
     }
 }
-/*{
+{
     save_window_ = new Graph(0)
-    save_window_.size(0,200,-80,40)
+    save_window_.size(0,200,1.16415e-10,0.018)
     scene_vector_[5] = save_window_
-    {save_window_.view(0, -80, 200, 120, 732, 360, 300.6, 200.8)}
+    {save_window_.view(0, 1.16415e-10, 200, 0.045, 700, 800, 1200, 450)}
     graphList[0].append(save_window_)
     save_window_.save_name("graphList[3].")
-    save_window_.addvar("cell.soma[0].v( 0.5 )", 1, 1)
-    save_window_.addvar("cell.apical_dend[52].v( 0.5 )", 2, 1)
-}*/
+    save_window_.addvar("cell.apical_dend[52].cai( 0.5 )", 2, 1)
+}
 
 objectvar scene_vector_[1]
 {doNotify()}

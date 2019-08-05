@@ -1,4 +1,4 @@
-objref spines_to_stim_indexes, apical_to_stim_indexes
+objref spines_to_stim_indexes, apical_to_stim_indexes, iclamps, stim
 spines_to_stim_len = 1
 spines_to_stim_indexes = new Vector(spines_to_stim_len)
 apical_to_stim_indexes = new Vector(spines_to_stim_len)
@@ -65,5 +65,19 @@ proc hz_stim() {
         CNUM = 1
     }
     setSelectedSpinesToStimCA3()
+}
 
+proc ic_stim() {
+    iclamps = new List()
+
+    del = ICSTART
+    for (i=0; i < ICNUM; i=i+1) {
+        PyramidalCell[0].soma[0] stim = new IClamp(0.5)
+        iclamps.append(stim)
+
+        stim.del = del
+        stim.dur = ICDUR
+        stim.amp = ICAMP
+        del = del + ICINT
+    }
 }

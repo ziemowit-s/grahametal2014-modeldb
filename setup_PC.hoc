@@ -56,9 +56,9 @@ CNOISE = 0	// cue ISI noise
 CINT = 2000	// EC spike ISI (one spike for simulation period)
 //CINT = GAMMA	// cue spike ISI
 CAWGT = 0.0005	// cue weight (AMPA)
-CNWGT = 0.001	// excitatory weights (NMDA)
+CNWGT = CAWGT*0.5	// excitatory weights (NMDA)
 CAWGTb = 0.0005	// cue weight (basal AMPA)
-CNWGTb = 0.001	// excitatory weights (basal NMDA)
+CNWGTb = CAWGTb*0.5	// excitatory weights (basal NMDA)
 CDEL = 1	// cue delay
 
 // BC inhibition
@@ -81,6 +81,13 @@ BSCDEL = 3	// BC delay
 
 HZSTIM = 1
 HZTIMESTIM = 1
+
+// IClamp stims params
+ICSTART = 50
+ICDUR = 3
+ICAMP = 1.6
+ICINT = 1
+ICNUM = 1
 
 
 {load_file("ranstream.hoc")}  // to give each cell its own sequence generator
@@ -369,6 +376,16 @@ proc makehzstim() {
     xvalue("Start time (ms)", "CSTART", 1, "hz_stim()")
     xvalue("Hz", "HZSTIM", 1, "hz_stim()")
     xvalue("Time (ms)", "HZTIMESTIM", 1, "hz_stim()")
+    xpanel()
+}
+
+proc makeicstim() {
+    xpanel("IClamp (can overlap each other)")
+    xvalue("Start (ms)", "ICSTART", 50, "ic_stim()")
+    xvalue("Dur (ms)", "ICDUR", 3, "ic_stim()")
+    xvalue("Amp (nA)", "ICAMP", 1.6, "ic_stim()")
+    xvalue("Interval (ms)", "ICINT", 1, "ic_stim()")
+    xvalue("Stim Number", "ICNUM", 1, "ic_stim()")
     xpanel()
 }
 
