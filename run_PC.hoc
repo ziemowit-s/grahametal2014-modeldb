@@ -58,25 +58,26 @@ makeicstim()
 
 strdef fname
 proc run() {
+    delta_t = ICSTART-CSTART
     stdinit()
     continuerun(tstop)
 
-    sprint(fname, "cai_spine_head_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", ICSTART, ICAMP, ICDUR)
+    sprint(fname, "cai_spine_head_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", delta_t, ICAMP, ICDUR)
     save_shead_cai(fname)
 
-    sprint(fname, "cai_spine_neck_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", ICSTART, ICAMP, ICDUR)
+    sprint(fname, "cai_spine_neck_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", delta_t, ICAMP, ICDUR)
     save_sneck_cai(fname)
 
-    sprint(fname, "cai_apical_dend_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", ICSTART, ICAMP, ICDUR)
+    sprint(fname, "cai_apical_dend_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", delta_t, ICAMP, ICDUR)
     save_apical_cai(fname)
 
-    sprint(fname, "ica_spine_head_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", ICSTART, ICAMP, ICDUR)
+    sprint(fname, "ica_spine_head_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", delta_t, ICAMP, ICDUR)
     save_shead_ica(fname)
 
-    sprint(fname, "ica_spine_neck_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", ICSTART, ICAMP, ICDUR)
+    sprint(fname, "ica_spine_neck_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", delta_t, ICAMP, ICDUR)
     save_sneck_ica(fname)
 
-    sprint(fname, "ica_apical_dend_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", ICSTART, ICAMP, ICDUR)
+    sprint(fname, "ica_apical_dend_%d_dt_iclamp_%.2f_nA_dur_%d_ms.csv", delta_t, ICAMP, ICDUR)
     save_apical_ica(fname)
 }
 xopen("synstim.ses")

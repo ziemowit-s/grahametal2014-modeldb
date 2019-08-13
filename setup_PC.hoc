@@ -56,9 +56,9 @@ CNOISE = 0	// cue ISI noise
 CINT = 2000	// EC spike ISI (one spike for simulation period)
 //CINT = GAMMA	// cue spike ISI
 CAWGT = 0.0005	// cue weight (AMPA)
-CNWGT = CAWGT*0.5	// excitatory weights (NMDA)
+CNWGT = (CAWGT*0.5)*0.75	// excitatory weights (NMDA)
 CAWGTb = 0.0005	// cue weight (basal AMPA)
-CNWGTb = CAWGTb*0.5	// excitatory weights (basal NMDA)
+CNWGTb = (CAWGTb*0.5)*0.75	// excitatory weights (basal NMDA)
 CDEL = 1	// cue delay
 
 // BC inhibition
